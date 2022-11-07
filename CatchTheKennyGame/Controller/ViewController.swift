@@ -69,6 +69,7 @@ class ViewController: UIViewController {
         
         //Timer
         counter = 10
+        timeLabel.text = "Time: \(counter)"
         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(timerFunc), userInfo: nil, repeats: true)
         
         
@@ -81,12 +82,19 @@ class ViewController: UIViewController {
     }
     
     @objc func timerFunc(){
-        timeLabel.text = "Time: \(counter)"
         counter = counter - 1
+        timeLabel.text = "Time: \(counter)"
+        
         if counter == 0{
             timer.invalidate()
             //Alert
-           // let alert = UIAlertController(title: "Time's Up", message: "Game is Over", preferredStyle: UIAlertController.Style.alert)
+            let alert = UIAlertController(title: "Time's Up", message: "do you want to play again?", preferredStyle: UIAlertController.Style.alert)
+            let okButton = UIAlertAction(title: "OK", style: UIAlertAction.Style.cancel, handler: nil)
+            let replayButton = UIAlertAction(title: "Replay", style: UIAlertAction.Style.default){
+                (UIAlertAction) in      }
+            alert.addAction(okButton)
+            alert.addAction(replayButton)
+            self.present(alert, animated: true)
         }
     }
 }
