@@ -26,6 +26,7 @@ class ViewController: UIViewController {
     //Variables
     var score = 0
     var timer = Timer()
+    var hideTimer = Timer()
     var counter = 0
     var kennyArray = [UIImageView]()
     
@@ -75,17 +76,24 @@ class ViewController: UIViewController {
         counter = 10
         timeLabel.text = "Time: \(counter)"
         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(timerFunc), userInfo: nil, repeats: true)
+        hideTimer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(hideKenny), userInfo: nil, repeats: true)
         
         
         hideKenny()
         }
     
     
-    func hideKenny(){
+    @objc func hideKenny(){
         for kenny in kennyArray {
             kenny.isHidden = true
         }
+        
+        //Rastgele bir Kenny'nin görünmesi için kullanılan hazır fonksiyon
+        let random = Int(arc4random_uniform(UInt32(kennyArray.count - 1)))
+        kennyArray[random].isHidden = false
     }
+    
+
     
     
     @objc func increaseScore(){
@@ -99,6 +107,11 @@ class ViewController: UIViewController {
         
         if counter == 0{
             timer.invalidate()
+            hideTimer.invalidate()
+            for kenny in kennyArray {
+                kenny.isHidden = true
+            }
+            
             //Alert
             let alert = UIAlertController(title: "Time's Up", message: "do you want to play again?", preferredStyle: UIAlertController.Style.alert)
             let okButton = UIAlertAction(title: "OK", style: UIAlertAction.Style.cancel, handler: nil)
