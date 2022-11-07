@@ -8,11 +8,11 @@
 import UIKit
 
 class ViewController: UIViewController {
-
+    
+    //Views
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var scoreLabel: UILabel!
     @IBOutlet weak var highscoreLabel: UILabel!
-    
     @IBOutlet weak var kenny1: UIImageView!
     @IBOutlet weak var kenny2: UIImageView!
     @IBOutlet weak var kenny3: UIImageView!
@@ -23,13 +23,20 @@ class ViewController: UIViewController {
     @IBOutlet weak var kenny8: UIImageView!
     @IBOutlet weak var kenny9: UIImageView!
     
-    var count = 0
+    //Variables
+    var score = 0
+    var timer = Timer()
+    var counter = 0
+    
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        scoreLabel.text = "SCORE: \(count)"
+        scoreLabel.text = "SCORE: \(score)"
         
+        //GestureRecognizer ile resimleri tıklanabilir formata getirme.
         kenny1.isUserInteractionEnabled = true
         kenny2.isUserInteractionEnabled = true
         kenny3.isUserInteractionEnabled = true
@@ -60,13 +67,26 @@ class ViewController: UIViewController {
         kenny8.addGestureRecognizer(gesture8)
         kenny9.addGestureRecognizer(gesture9)
         
+        //Timer
+        counter = 10
+        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(timerFunc), userInfo: nil, repeats: true)
+        
         
     }
-
-
+    
+    
     @objc func increaseScore(){
-        count = count + 1
-        scoreLabel.text = "SCORE: \(count)"
+        score = score + 1
+        scoreLabel.text = "SCORE: \(score)"
+    }
+    
+    @objc func timerFunc(){
+        timeLabel.text = "Time: \(counter)"
+        counter = counter - 1
+        if counter == 0{
+            timer.invalidate()
+            //Alert
+           // let alert = UIAlertController(title: "Time's Up", message: "Game is Over", preferredStyle: UIAlertController.Style.alert)
+        }
     }
 }
-
