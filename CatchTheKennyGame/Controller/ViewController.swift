@@ -27,6 +27,7 @@ class ViewController: UIViewController {
     var score = 0
     var timer = Timer()
     var counter = 0
+    var kennyArray = [UIImageView]()
     
     
     
@@ -67,12 +68,23 @@ class ViewController: UIViewController {
         kenny8.addGestureRecognizer(gesture8)
         kenny9.addGestureRecognizer(gesture9)
         
+        kennyArray = [kenny1,kenny2,kenny3,kenny4,kenny5,kenny6,kenny7,kenny8,kenny9]
+        
+        
         //Timer
         counter = 10
         timeLabel.text = "Time: \(counter)"
         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(timerFunc), userInfo: nil, repeats: true)
         
         
+        hideKenny()
+        }
+    
+    
+    func hideKenny(){
+        for kenny in kennyArray {
+            kenny.isHidden = true
+        }
     }
     
     
