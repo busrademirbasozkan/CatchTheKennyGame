@@ -29,7 +29,7 @@ class ViewController: UIViewController {
     var hideTimer = Timer()
     var counter = 0
     var kennyArray = [UIImageView]()
-    
+    var highscore = 0
     
     
     
@@ -37,6 +37,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         scoreLabel.text = "SCORE: \(score)"
+        
         
         //GestureRecognizer ile resimleri tıklanabilir formata getirme.
         kenny1.isUserInteractionEnabled = true
@@ -71,15 +72,26 @@ class ViewController: UIViewController {
         
         kennyArray = [kenny1,kenny2,kenny3,kenny4,kenny5,kenny6,kenny7,kenny8,kenny9]
         
-        
+
         //Timer
         counter = 10
         timeLabel.text = "Time: \(counter)"
         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(timerFunc), userInfo: nil, repeats: true)
-        hideTimer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(hideKenny), userInfo: nil, repeats: true)
+        hideTimer = Timer.scheduledTimer(timeInterval: 0.7, target: self, selector: #selector(hideKenny), userInfo: nil, repeats: true)
         
-        
+        //HighScore check
+        let storedHighScore = UserDefaults.standard.object(forKey: "HighScore")
+        if storedHighScore == nil {
+            highscore = 0
+            highscoreLabel.text = "HighScore: \(highscore)"
+        }
+        if let newScore = storedHighScore as? Int {
+            highscore = newScore
+            highscoreLabel.text = "HighScore: \(highscore)"
+        }
+
         hideKenny()
+        
         }
     
     
@@ -112,6 +124,15 @@ class ViewController: UIViewController {
                 kenny.isHidden = true
             }
             
+            //HighScore
+            if self.score > self.highscore{
+                self.highscore = self.score
+                highscoreLabel.text = "HighScore: \(self.highscore)"
+                UserDefaults.standard.set(self.highscore, forKey: "HighScore")
+            }
+    
+            
+            
             //Alert
             let alert = UIAlertController(title: "Time's Up", message: "do you want to play again?", preferredStyle: UIAlertController.Style.alert)
             let okButton = UIAlertAction(title: "OK", style: UIAlertAction.Style.cancel, handler: nil)
@@ -122,11 +143,12 @@ class ViewController: UIViewController {
                 self.counter = 10
                 self.timeLabel.text = "Time: \(self.counter)"
                 timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.timerFunc), userInfo: nil, repeats: true)
-                self.hideTimer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(self.hideKenny), userInfo: nil, repeats: true)
+                self.hideTimer = Timer.scheduledTimer(timeInterval: 0.7, target: self, selector: #selector(self.hideKenny), userInfo: nil, repeats: true)
                 }
             alert.addAction(okButton)
             alert.addAction(replayButton)
             self.present(alert, animated: true)
         }
+        
     }
 }
