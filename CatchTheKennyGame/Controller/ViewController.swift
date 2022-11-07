@@ -23,12 +23,50 @@ class ViewController: UIViewController {
     @IBOutlet weak var kenny8: UIImageView!
     @IBOutlet weak var kenny9: UIImageView!
     
+    var count = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        
+        scoreLabel.text = "SCORE: \(count)"
+        
+        kenny1.isUserInteractionEnabled = true
+        kenny2.isUserInteractionEnabled = true
+        kenny3.isUserInteractionEnabled = true
+        kenny4.isUserInteractionEnabled = true
+        kenny5.isUserInteractionEnabled = true
+        kenny6.isUserInteractionEnabled = true
+        kenny7.isUserInteractionEnabled = true
+        kenny8.isUserInteractionEnabled = true
+        kenny9.isUserInteractionEnabled = true
+        
+        let gesture1 = UITapGestureRecognizer(target: self, action: #selector(increaseScore))
+        let gesture2 = UITapGestureRecognizer(target: self, action: #selector(increaseScore))
+        let gesture3 = UITapGestureRecognizer(target: self, action: #selector(increaseScore))
+        let gesture4 = UITapGestureRecognizer(target: self, action: #selector(increaseScore))
+        let gesture5 = UITapGestureRecognizer(target: self, action: #selector(increaseScore))
+        let gesture6 = UITapGestureRecognizer(target: self, action: #selector(increaseScore))
+        let gesture7 = UITapGestureRecognizer(target: self, action: #selector(increaseScore))
+        let gesture8 = UITapGestureRecognizer(target: self, action: #selector(increaseScore))
+        let gesture9 = UITapGestureRecognizer(target: self, action: #selector(increaseScore))
+        
+        kenny1.addGestureRecognizer(gesture1)
+        kenny2.addGestureRecognizer(gesture2)
+        kenny3.addGestureRecognizer(gesture3)
+        kenny4.addGestureRecognizer(gesture4)
+        kenny5.addGestureRecognizer(gesture5)
+        kenny6.addGestureRecognizer(gesture6)
+        kenny7.addGestureRecognizer(gesture7)
+        kenny8.addGestureRecognizer(gesture8)
+        kenny9.addGestureRecognizer(gesture9)
+        
+        
     }
 
 
+    @objc func increaseScore(){
+        count = count + 1
+        scoreLabel.text = "SCORE: \(count)"
+    }
 }
 
